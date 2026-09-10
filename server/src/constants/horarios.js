@@ -13,3 +13,5 @@ export const HORARIOS = {
 };
 
 export const INTERVALO_MINUTOS = 30;
+
+export const HORA_HHMM = /^([01]\d|2[0-3]):[0-5]\d$/;

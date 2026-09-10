@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api, sesion } from '../lib/api';
+import { api } from '../lib/api';
 
 export default function AdminLogin() {
   const [username, setUsername] = useState('');
@@ -11,8 +11,7 @@ export default function AdminLogin() {
   async function entrar() {
     setError(null);
     try {
-      const { token } = await api.login(username, password);
-      sesion.guardar(token);
+      await api.login(username, password);
       navigate('/admin');
     } catch (e) {
       setError((e as Error).message);

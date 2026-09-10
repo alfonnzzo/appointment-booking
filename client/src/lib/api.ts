@@ -19,11 +19,15 @@ export type Turno = {
   Servicio?: Servicio;
 };
 
+export type Usuario = { id: number; username: string };
+
 async function pedir<T>(path: string, opciones: RequestInit = {}): Promise<T> {
   const res = await fetch(`${BASE}${path}`, {
     ...opciones,
+    credentials: 'include',
     headers: { 'Content-Type': 'application/json', ...opciones.headers },
   });
+  if (res.status === 204) return undefined as T;
   const cuerpo = await res.json().catch(() => null);
   if (!res.ok) throw new Error(cuerpo?.error ?? `Error ${res.status}`);
   return cuerpo as T;
@@ -39,22 +43,14 @@ export const api = {
     pedir<Turno>('/turnos', { method: 'POST', body: JSON.stringify(datos) }),
 
   login: (username: string, password: string) =>
-    pedir<{ token: string }>('/auth/login', { method: 'POST', body: JSON.stringify({ username, password }) }),
+    pedir<Usuario>('/auth/login', { method: 'POST', body: JSON.stringify({ username, password }) }),
 
-  adminTurnos: (token: string) =>
-    pedir<Turno[]>('/admin/turnos', { headers: { Authorization: `Bearer ${token}` } }),
+  logout: () => pedir<void>('/auth/logout', { method: 'POST' }),
 
-  actualizarEstadoTurno: (token: string, id: number, estado: Turno['estado']) =>
-    pedir<Turno>(`/admin/turnos/${id}`, {
-      method: 'PATCH',
-      headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify({ estado }),
-    }),
-};
+  me: () => pedir<Usuario>('/auth/me'),
 
-const TOKEN_KEY = 'turnos_admin_token';
-export const sesion = {
-  guardar: (token: string) => localStorage.setItem(TOKEN_KEY, token),
-  obtener: () => localStorage.getItem(TOKEN_KEY),
-  borrar: () => localStorage.removeItem(TOKEN_KEY),
+  adminTurnos: () => pedir<Turno[]>('/admin/turnos'),
+
+  actualizarEstadoTurno: (id: number, estado: Turno['estado']) =>
+    pedir<Turno>(`/admin/turnos/${id}`, { method: 'PATCH', body: JSON.stringify({ estado }) }),
 };

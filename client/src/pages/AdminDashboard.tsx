@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { api, sesion, type Turno } from '../lib/api';
+import { api, type Turno } from '../lib/api';
 
 const ESTILO_ESTADO: Record<Turno['estado'], string> = {
   pendiente: 'bg-amber-100 text-amber-800',
@@ -11,38 +11,41 @@ const ESTILO_ESTADO: Record<Turno['estado'], string> = {
 export default function AdminDashboard() {
   const [turnos, setTurnos] = useState<Turno[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [verificando, setVerificando] = useState(true);
   const navigate = useNavigate();
-  const token = sesion.obtener();
 
   useEffect(() => {
-    if (!token) {
-      navigate('/admin/login');
-      return;
-    }
-    cargar();
+    api
+      .me()
+      .then(() => {
+        setVerificando(false);
+        cargar();
+      })
+      .catch(() => navigate('/admin/login'));
   }, []);
 
   function cargar() {
     api
-      .adminTurnos(token!)
+      .adminTurnos()
       .then(setTurnos)
-      .catch((e) => {
-        if (e.message.includes('Token')) {
-          sesion.borrar();
-          navigate('/admin/login');
-        } else setError(e.message);
-      });
+      .catch((e) => setError(e.message));
   }
 
   async function cambiarEstado(id: number, estado: Turno['estado']) {
-    await api.actualizarEstadoTurno(token!, id, estado);
-    cargar();
+    try {
+      await api.actualizarEstadoTurno(id, estado);
+      cargar();
+    } catch (e) {
+      setError((e as Error).message);
+    }
   }
 
-  function salir() {
-    sesion.borrar();
+  async function salir() {
+    await api.logout();
     navigate('/admin/login');
   }
+
+  if (verificando) return null;
 
   return (
     <div className="mx-auto max-w-3xl p-6">
