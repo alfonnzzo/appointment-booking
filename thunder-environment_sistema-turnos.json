@@ -1,0 +1,16 @@
+{
+  "client": "Thunder Client",
+  "environmentName": "sistema-turnos local",
+  "dateExported": "2026-09-10T02:59:22.438Z",
+  "version": "1.2",
+  "data": [
+    {
+      "name": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "name": "token",
+      "value": ""
+    }
+  ]
+}

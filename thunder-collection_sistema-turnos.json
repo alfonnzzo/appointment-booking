@@ -1,0 +1,284 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Sistema de turnos",
+  "dateExported": "2026-09-10T02:59:22.438Z",
+  "version": "1.2",
+  "folders": [],
+  "requests": [
+    {
+      "_id": "7db8607d-45a7-4d17-8258-3a4c2d3da239",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "1. Servicios (publico)",
+      "url": "{{baseUrl}}/api/servicios",
+      "method": "GET",
+      "sortNum": 10000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "none",
+        "raw": "",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "aa6fa04e-d0b2-45c0-b8bd-6989f740f8f3",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "2. Disponibilidad",
+      "url": "{{baseUrl}}/api/disponibilidad?servicioId=1&fecha=2026-09-10",
+      "method": "GET",
+      "sortNum": 20000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "none",
+        "raw": "",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "8a2c3dc1-8b17-41e5-944c-3f84a51cd006",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "3. Crear turno",
+      "url": "{{baseUrl}}/api/turnos",
+      "method": "POST",
+      "sortNum": 30000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"servicioId\": 1,\n  \"fecha\": \"2026-09-10\",\n  \"horaInicio\": \"10:00\",\n  \"clienteNombre\": \"Juan Perez\",\n  \"clienteTelefono\": \"3704123456\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "e05df12d-e567-4769-9ae4-d83bedf0f20e",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "4. Login admin",
+      "url": "{{baseUrl}}/api/auth/login",
+      "method": "POST",
+      "sortNum": 40000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"changeme123\"\n}",
+        "form": []
+      },
+      "tests": [
+        {
+          "type": "set-env-var",
+          "custom": "json.token",
+          "action": "setto",
+          "value": "{{token}}"
+        }
+      ]
+    },
+    {
+      "_id": "32d04db8-1579-48b3-a821-536a87c7f907",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "5. Listar turnos",
+      "url": "{{baseUrl}}/api/admin/turnos?desde=2026-09-01",
+      "method": "GET",
+      "sortNum": 50000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "none",
+        "raw": "",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "c460601b-8c26-40d0-93f1-ab53f2b65225",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "6. Cambiar estado turno",
+      "url": "{{baseUrl}}/api/admin/turnos/1",
+      "method": "PATCH",
+      "sortNum": 60000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"estado\": \"confirmado\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "3db2f586-bb15-4fd5-b035-11de7439d4d7",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "7. Servicios (admin)",
+      "url": "{{baseUrl}}/api/admin/servicios",
+      "method": "GET",
+      "sortNum": 70000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "none",
+        "raw": "",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "0df2b7a6-2e52-4586-9076-06ddd7e96a65",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "8. Crear servicio",
+      "url": "{{baseUrl}}/api/admin/servicios",
+      "method": "POST",
+      "sortNum": 80000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"nombre\": \"Perfilado de cejas\",\n  \"duracionMinutos\": 15,\n  \"precio\": 4000\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "ae062db6-4e4c-47d8-b13c-6540044ca8ec",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "9. Editar servicio",
+      "url": "{{baseUrl}}/api/admin/servicios/1",
+      "method": "PATCH",
+      "sortNum": 90000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"precio\": 9500,\n  \"activo\": true\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "7d1a63d7-4b85-40f5-9ae0-c109667918f5",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "10. Listar bloqueos",
+      "url": "{{baseUrl}}/api/admin/bloqueos?desde=2026-09-01",
+      "method": "GET",
+      "sortNum": 100000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "none",
+        "raw": "",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "85daed24-c4f2-4e91-8296-8651d81eb704",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "11. Crear bloqueo",
+      "url": "{{baseUrl}}/api/admin/bloqueos",
+      "method": "POST",
+      "sortNum": 110000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "json",
+        "raw": "{\n  \"fecha\": \"2026-09-11\",\n  \"horaInicio\": \"09:00\",\n  \"horaFin\": \"13:00\",\n  \"motivo\": \"Turno medico\"\n}",
+        "form": []
+      },
+      "tests": []
+    },
+    {
+      "_id": "a26a9440-d9ba-44a1-92dd-0d8ebc66bb6b",
+      "colId": "a373faf2-7e4e-4436-82ee-eebc8390dcd7",
+      "containerId": "",
+      "name": "12. Borrar bloqueo",
+      "url": "{{baseUrl}}/api/admin/bloqueos/1",
+      "method": "DELETE",
+      "sortNum": 120000,
+      "created": "2026-09-10T02:59:22.438Z",
+      "modified": "2026-09-10T02:59:22.438Z",
+      "headers": [
+        {
+          "name": "Authorization",
+          "value": "Bearer {{token}}"
+        }
+      ],
+      "params": [],
+      "body": {
+        "type": "none",
+        "raw": "",
+        "form": []
+      },
+      "tests": []
+    }
+  ]
+}
